@@ -1,8 +1,8 @@
 # DealHunter — Database Schema
 
-> **Status:** Draft — to be finalized in Phase 1 | **Last Updated:** 2026-10-05
+> **Status:** Finalized — Phase 1 Complete | **Last Updated:** 2026-10-05
 
-This document explains the database design decisions. The Prisma schema will be the authoritative source of truth once Phase 1 begins.
+The Prisma schema in `backend/prisma/schema.prisma` is the authoritative source of truth.
 
 ---
 

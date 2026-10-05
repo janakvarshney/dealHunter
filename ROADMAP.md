@@ -15,8 +15,8 @@ This roadmap breaks development into clearly scoped phases. Each phase has a def
 | Phase | Name | Status | Key Deliverable |
 |---|---|---|---|
 | 0 | Foundation | ✅ **Complete** | Docs, ADRs, folder structure, gitignore |
-| 1 | Database Schema | 🔲 Next | PostgreSQL schema, Prisma models, migrations |
-| 2 | Connector Architecture | 🔲 Pending | BaseConnector + Amazon, Flipkart, Croma mocks |
+| 1 | Database Schema | ✅ **Complete** | PostgreSQL schema, Prisma models, migrations |
+| 2 | Connector Architecture | 🔲 Next | BaseConnector + Amazon, Flipkart, Croma mocks |
 | 3 | Mock Data Engine | 🔲 Pending | Seed script with realistic product/offer data |
 | 4 | Product Matching Engine | 🔲 Pending | Deterministic + fuzzy matcher with confidence scores |
 | 5 | Deal Scoring Engine | 🔲 Pending | True Cost + weighted Deal Score algorithm |
@@ -59,7 +59,7 @@ A strong foundation prevents expensive rework later. Documenting decisions befor
 
 ---
 
-## Phase 1 — Database Schema 🔲
+## Phase 1 — Database Schema ✅
 
 **Objective:** Design and implement the complete PostgreSQL database schema.
 
@@ -75,10 +75,10 @@ The database schema is the single most important design decision after the tech 
 - UUID vs auto-increment primary keys
 
 ### Deliverables
-- [ ] `backend/prisma/schema.prisma` — complete Prisma schema
-- [ ] All migration files
-- [ ] `docs/database.md` — ER diagram + design rationale
-- [ ] Seed script skeleton
+- [x] `backend/prisma/schema.prisma` — complete Prisma schema (15 entities)
+- [x] Prisma Client generation & validation
+- [x] `docs/database.md` — ER diagram + design rationale
+- [x] `backend/prisma/seed.ts` — seed script skeleton
 
 ### Entities to Design
 - `User`
