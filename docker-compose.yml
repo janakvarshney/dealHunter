@@ -1,0 +1,124 @@
+version: '3.9'
+
+# =============================================================================
+# DealHunter — Docker Compose (Local Development)
+# =============================================================================
+# Usage:
+#   Start all:    docker-compose up
+#   Background:   docker-compose up -d
+#   View logs:    docker-compose logs -f backend
+#   Stop:         docker-compose down
+#   Reset data:   docker-compose down -v
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # PostgreSQL Database
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:15-alpine
+    container_name: dealhunter_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dealhunter_user
+      POSTGRES_PASSWORD: dealhunter_pass
+      POSTGRES_DB: dealhunter_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dealhunter_user -d dealhunter_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ---------------------------------------------------------------------------
+  # Redis Cache
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: dealhunter_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --maxmemory 128mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # Backend API (Node.js + Express)
+  # ---------------------------------------------------------------------------
+  # Uncomment after Phase 6 (backend implementation)
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: dealhunter_backend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "4000:4000"
+  #   environment:
+  #     NODE_ENV: development
+  #     DATABASE_URL: postgresql://dealhunter_user:dealhunter_pass@postgres:5432/dealhunter_db
+  #     REDIS_URL: redis://redis:6379
+  #     JWT_SECRET: ${JWT_SECRET}
+  #     GEMINI_API_KEY: ${GEMINI_API_KEY}
+  #     FRONTEND_URL: http://localhost:5173
+  #   volumes:
+  #     - ./backend:/app
+  #     - /app/node_modules
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   command: npm run dev
+
+  # ---------------------------------------------------------------------------
+  # Frontend (React + Vite)
+  # ---------------------------------------------------------------------------
+  # Uncomment after Phase 8 (frontend implementation)
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: dealhunter_frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5173:5173"
+  #   environment:
+  #     VITE_API_URL: http://localhost:4000
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   depends_on:
+  #     - backend
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# =============================================================================
+# Notes:
+# - Backend and frontend are commented out until implementation phases
+# - PostgreSQL and Redis can be started immediately for Phase 1 development
+# - Run backend locally (npm run dev) while PostgreSQL/Redis run in Docker
+#
+# Local dev workflow:
+#   docker-compose up postgres redis   ← start only DB + cache
+#   cd backend && npm run dev          ← run backend locally
+#   cd frontend && npm run dev         ← run frontend locally
+# =============================================================================

@@ -1,0 +1,121 @@
+# =============================================================================
+# DealHunter — .gitignore
+# =============================================================================
+
+# --- Environment & Secrets (NEVER commit these) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# --- Node.js ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+package-lock.json.bak
+
+# --- TypeScript ---
+*.tsbuildinfo
+*.js.map
+
+# --- Build Output ---
+dist/
+build/
+out/
+.output/
+
+# --- Frontend (Vite) ---
+frontend/dist/
+frontend/.vite/
+
+# --- Backend ---
+backend/dist/
+
+# --- Python (if ever added) ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+
+# --- Database ---
+*.sqlite
+*.sqlite3
+*.db
+postgres-data/
+pgdata/
+
+# --- Redis ---
+dump.rdb
+appendonly.aof
+
+# --- Logs ---
+logs/
+*.log
+log/
+npm-debug.log
+
+# --- Testing ---
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+.playwright/
+
+# --- OS Files ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*.suo
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# --- Docker ---
+docker-compose.override.yml
+
+# --- Prisma ---
+backend/prisma/migrations/dev.db
+
+# --- Cache ---
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.turbo/
+
+# --- Temporary Files ---
+tmp/
+temp/
+*.tmp
+*.temp
+
+# --- GitHub Actions ---
+# (keep workflows tracked, exclude local act cache)
+.act/
